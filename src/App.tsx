@@ -32,7 +32,7 @@ function App() {
           } else {
             setDistance(0)
             setUpdatedResults({ departureAirport: '', arrivalAirport: '' })
-            setErrorMsg('Error while calculating distance. Please check your submitted fields.')
+            setErrorMsg('Error while calculating distance. Please check submitted fields.')
           }
           setLoading(false)
         }, 2000);
