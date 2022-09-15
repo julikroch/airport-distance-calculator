@@ -18,8 +18,8 @@ const Input = (props: InputI) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const foundAirport = airports && airports?.data?.filter((airport: AirportI) =>
             airport?.iatacode?.includes(e.target.value.toUpperCase()) ||
-            airport?.name?.toLowerCase()?.includes(e.target.value) ||
-            airport?.cityname?.toLowerCase()?.includes(e.target.value))
+            airport?.name?.toLowerCase()?.includes(e.target.value.toLowerCase()) ||
+            airport?.cityname?.toLowerCase()?.includes(e.target.value.toLowerCase()))
 
         setErrorMsg(!foundAirport?.length ? true : false)
         setMessage(e.target.value)
