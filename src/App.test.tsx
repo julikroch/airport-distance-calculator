@@ -1,9 +1,15 @@
+/* eslint-disable testing-library/prefer-screen-queries */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('Component title to match with the title provided', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const title = screen.getByText(/🌎 Airport distance calculator 🛫/i);
+  expect(title).toBeInTheDocument();
+});
+
+test('Error message not to be in the doc on first render', () => {
+  const { queryAllByTestId } = render(<App />);
+  expect(queryAllByTestId(/error-msg/i)).toHaveLength(0)
 });

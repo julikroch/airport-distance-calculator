@@ -71,13 +71,17 @@ function App() {
 
         {loading
           ? <Box className='app--container__spinner'><CircularProgress /></Box>
-          : distance !== 0 && updatedResults ?
+          : distance !== 0 && updatedResults
+            ?
             <p className='app--container__distance'>
-              The distance between <b>{updatedResults.departureAirport}</b> and <b>{updatedResults.arrivalAirport}</b> is <b><span className='app--container__miles'> 🧭 {distance} nautical miles 🧭</span></b>
+              The distance between
+              <b> {updatedResults.departureAirport}</b> and
+              <b> {updatedResults.arrivalAirport}</b> is
+              <b><span className='app--container__miles'> 🧭 {distance} nautical miles 🧭</span></b>
             </p>
             : <Fragment />}
 
-        {errorMsg && <p className='app--container__error'>{errorMsg}</p>}
+        {errorMsg && <p data-testid='error-msg' className='app--container__error'>{errorMsg}</p>}
       </div>
     </div>
   );

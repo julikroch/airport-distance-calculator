@@ -13,22 +13,23 @@ const Input = (props: InputI) => {
     const { airports } = useAirports()
     const [search, setSearch] = useState<SearchI>()
     const [message, setMessage] = useState('');
-    const [errorMsg, setErrorMsg] = useState('')
+    const [errorMsg, setErrorMsg] = useState(false)
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: any) => {
         const foundAirport = airports && airports?.data?.filter((airport: AirportI) =>
-            airport?.iatacode.includes(e.target.value.toUpperCase()) ||
-            airport?.name.toLowerCase().includes(e.target.value) ||
+            airport?.iatacode?.includes(e.target.value.toUpperCase()) ||
+            airport?.name?.toLowerCase().includes(e.target.value) ||
             airport?.cityname?.toLowerCase().includes(e.target.value))
 
-        setErrorMsg(!foundAirport?.length ? 'No results for you search 😞' : '')
+        setErrorMsg(!foundAirport?.length ? true : false)
         setMessage(e.target.value)
         setSearch({ param: e.target.name, airportsArr: foundAirport ?? [] })
+        search?.param === 'Departure' ? setDeparture(foundAirport) : setArrival(foundAirport)
     }
 
     const handleClick = (param: string, airport: AirportI) => {
         setMessage(airport.iatacode)
-        param === 'Departure' && airport ? setDeparture(airport) : setArrival(airport)
+        param === 'Departure' ? setDeparture(airport) : setArrival(airport)
         setSearch({ param: '', airportsArr: [] })
     }
 
@@ -46,13 +47,17 @@ const Input = (props: InputI) => {
                 error={errorMsg ? true : false}
                 helperText={errorMsg && "No results for this search."}
                 onChange={handleChange}
+                onBlur={handleChange}
             />
             {search?.airportsArr && search?.airportsArr?.length >= 0 && message ?
                 <List className='input--dropdown'>
                     {search?.airportsArr?.map((airport: AirportI) =>
-                        <div key={airport.iatacode}>
+                        <div
+                            key={airport?.iatacode}
+                            tabIndex={0}
+                        >
                             <ListItem className='input--option' onClick={() => handleClick(search.param, airport)}>
-                                {airport.name}, {airport.cityname}
+                                {airport?.name}, {airport?.cityname}
                             </ListItem>
                             <Divider />
                         </div>

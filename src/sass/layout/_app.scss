@@ -2,7 +2,10 @@
     display: grid;
     place-content: center;
     height: 75vh;
-    gap: 3rem;
+
+    @include respond(tablet) {
+        height: 100vh;
+    }
 
     &--container {
         margin: 0 1rem;
@@ -11,7 +14,7 @@
         padding: 2rem;
         border-radius: .4rem;
 
-        @media screen and (min-width: 40rem) {
+        @include respond(tablet) {
             width: 35rem;
         }
 
@@ -30,6 +33,10 @@
             margin-top: 1.5rem;
             line-height: 1.5;
             text-align: center;
+        }
+
+        &__error {
+            color: $errorColor;
         }
 
         &__miles {
