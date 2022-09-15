@@ -15,11 +15,11 @@ const Input = (props: InputI) => {
     const [message, setMessage] = useState('');
     const [errorMsg, setErrorMsg] = useState(false)
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const foundAirport = airports && airports?.data?.filter((airport: AirportI) =>
             airport?.iatacode?.includes(e.target.value.toUpperCase()) ||
-            airport?.name?.toLowerCase().includes(e.target.value) ||
-            airport?.cityname?.toLowerCase().includes(e.target.value))
+            airport?.name?.toLowerCase()?.includes(e.target.value) ||
+            airport?.cityname?.toLowerCase()?.includes(e.target.value))
 
         setErrorMsg(!foundAirport?.length ? true : false)
         setMessage(e.target.value)
@@ -47,8 +47,8 @@ const Input = (props: InputI) => {
                 error={errorMsg ? true : false}
                 helperText={errorMsg && "No results for this search."}
                 onChange={handleChange}
-                onBlur={handleChange}
             />
+
             {search?.airportsArr && search?.airportsArr?.length >= 0 && message ?
                 <List className='input--dropdown'>
                     {search?.airportsArr?.map((airport: AirportI) =>
