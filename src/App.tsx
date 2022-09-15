@@ -9,10 +9,10 @@ import { AirportI, ResultI } from './typings';
 
 function App() {
 
-  const [departure, setDeparture] = useState<AirportI | any>()
-  const [arrival, setArrival] = useState<AirportI | any>()
+  const [departure, setDeparture] = useState<AirportI>()
+  const [arrival, setArrival] = useState<AirportI>()
   const [distance, setDistance] = useState(0)
-  const [updatedResults, setUpdatedResults] = useState<ResultI | any>()
+  const [updatedResults, setUpdatedResults] = useState<ResultI>()
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -28,7 +28,7 @@ function App() {
         setTimeout(() => {
           if (nauticalMilesConvertion) {
             setDistance(Math.round(nauticalMilesConvertion))
-            setUpdatedResults({ departureAirport: departure.name, arrivalAirport: arrival.name })
+            departure && arrival && setUpdatedResults({ departureAirport: departure.name, arrivalAirport: arrival.name })
           } else {
             setDistance(0)
             setUpdatedResults({ departureAirport: '', arrivalAirport: '' })
@@ -43,16 +43,18 @@ function App() {
   return (
     <div className='app'>
       <div className='app--container'>
-        <h2 className='app--container__title'>🌎 Airport Distance Calculator 🛫</h2>
+        <h2 className='app--container__title'>🌎 Airport distance calculator 🛫</h2>
         <Input
           label='Departure'
           placeholder='Ex: MIA'
           setDeparture={setDeparture}
+          setArrival={setArrival}
         />
 
         <Input
           label='Arrival'
           placeholder='Ex: JFK'
+          setDeparture={setDeparture}
           setArrival={setArrival}
         />
 
@@ -69,9 +71,9 @@ function App() {
 
         {loading
           ? <Box className='app--container__spinner'><CircularProgress /></Box>
-          : distance !== 0 ?
+          : distance !== 0 && updatedResults ?
             <p className='app--container__distance'>
-              The distance between <b>{updatedResults.departureAirport}</b> and <b>{updatedResults.arrivalAirport}</b> is <b><span className='app--container__miles'> {distance} nautical miles.</span></b>
+              The distance between <b>{updatedResults.departureAirport}</b> and <b>{updatedResults.arrivalAirport}</b> is <b><span className='app--container__miles'> 🧭 {distance} nautical miles 🧭</span></b>
             </p>
             : <Fragment />}
 

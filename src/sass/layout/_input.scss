@@ -6,7 +6,7 @@
     }
 
     &--dropdown {
-        overflow-y: scroll;
+        overflow-y: auto;
         max-height: 130px;
     }
 }

@@ -1,8 +1,8 @@
 export interface InputI {
     label: string
     placeholder: string
-    setDeparture?: React.Dispatch<AirportI> | any
-    setArrival?: React.Dispatch<AirportI> | any
+    setDeparture: React.Dispatch<AirportI>
+    setArrival: React.Dispatch<AirportI>
 }
 
 export interface SearchI {
@@ -19,6 +19,6 @@ export interface AirportI {
 }
 
 export interface ResultI {
-    departureAirport: string | any
-    arrivalAirport: string | any
+    departureAirport: string
+    arrivalAirport: string
 }
