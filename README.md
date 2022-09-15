@@ -1,6 +1,23 @@
-# Getting Started with Create React App
+# Airport distance calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+App that calculates the distance between two airports in nautical miles. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Before you start 😊
+
+Before running available scripts, you may need to create a file named `variables.ts` inside the `/src` folder.
+
+```
+/src
+    + variables.ts
+```
+
+Inside this, add the following code:
+
+```
+export const API_KEY = 'MY_APP_KEY'
+```
+
+Where 'MY_APP_KEY' needs to be replaced with your app key created in the following link: [RapidAPI Official Documentation](https://docs.rapidapi.com/docs/keys)
 
 ## Available Scripts
 
