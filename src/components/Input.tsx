@@ -68,7 +68,7 @@ const Input = (props: InputI) => {
     )
 }
 
-Input.defaultPops = {
+Input.defaultProps = {
     label: 'Departure',
     placeholder: 'Ex: JFK'
 }
