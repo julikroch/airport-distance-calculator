@@ -68,4 +68,9 @@ const Input = (props: InputI) => {
     )
 }
 
+Input.defaultPops = {
+    label: 'Departure',
+    placeholder: 'Ex: JFK'
+}
+
 export default Input
