@@ -1,17 +1,24 @@
 export interface InputI {
     label: string
     placeholder: string
-    setDeparture?: React.Dispatch<any> | any
-    setArrival?: React.Dispatch<any> | any
+    setDeparture?: React.Dispatch<AirportI> | any
+    setArrival?: React.Dispatch<AirportI> | any
 }
 
 export interface SearchI {
     param: string
-    airportsArr: any[]
+    airportsArr: AirportI[]
 }
 
 export interface AirportI {
     iatacode: string
-    name: string | any
+    name: string
     cityname: string
+    latitude: number
+    longitude: number
+}
+
+export interface ResultI {
+    departureAirport: string | any
+    arrivalAirport: string | any
 }

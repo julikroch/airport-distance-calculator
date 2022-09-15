@@ -11,27 +11,24 @@ const Input = (props: InputI) => {
     const { label, placeholder, setDeparture, setArrival } = props
 
     const { airports } = useAirports()
-    const [search, setSearch] = useState<SearchI | any>()
+    const [search, setSearch] = useState<SearchI>()
     const [message, setMessage] = useState('');
     const [errorMsg, setErrorMsg] = useState('')
 
     const handleChange = (e: any) => {
-        const foundAirport = airports && airports?.data?.filter((airport: AirportI) => airport?.iatacode === e.target.value.toUpperCase() || airport?.name.toLowerCase().includes(e.target.value))
+        const foundAirport = airports && airports?.data?.filter((airport: AirportI) => airport?.iatacode === e.target.value.toUpperCase() || airport?.name.toLowerCase().includes(e.target.value) || airport?.cityname?.toLowerCase().includes(e.target.value))
 
         !foundAirport?.length ? setErrorMsg('No results for you search 😞') : setErrorMsg('')
 
         setMessage(e.target.value)
-
-        setSearch({
-            param: e.target.name,
-            airportsArr: foundAirport
-        })
+        setSearch({ param: e.target.name, airportsArr: foundAirport })
     }
 
-    const handleClick = (param: string, dep: any) => {
+    const handleClick = (param: string, dep: AirportI) => {
+        console.log({dep})
         setMessage(dep.iatacode)
         param === 'Departure' ? setDeparture(dep) : setArrival(dep)
-        setSearch({})
+        setSearch({ param: '', airportsArr: [] })
     }
 
     return (
@@ -43,13 +40,13 @@ const Input = (props: InputI) => {
                 name={label}
                 className='input--text'
                 placeholder={placeholder}
-                onChange={handleChange}
                 value={message}
                 error={errorMsg ? true : false}
                 helperText={errorMsg && "No results for this search 😞"}
+                onChange={handleChange}
             />
             <List className='input--dropdown'>
-                {search?.airportsArr?.length && search?.airportsArr?.length >= 0 ? search?.airportsArr?.map((airport: AirportI) =>
+                {search?.airportsArr && search?.airportsArr?.length >= 0 && message ? search?.airportsArr?.map((airport: AirportI) =>
                     <div key={airport.iatacode}>
                         <ListItem onClick={() => handleClick(search.param, airport)}>
                             {airport.name}, {airport.cityname}
@@ -58,7 +55,7 @@ const Input = (props: InputI) => {
                     </div>
                 ) : <Fragment />}
             </List>
-        </div >
+        </div>
     )
 }
 

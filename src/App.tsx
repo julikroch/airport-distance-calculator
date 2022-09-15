@@ -1,38 +1,49 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import Input from './components/Input';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { OPTIONS } from './constants';
+import { AirportI, ResultI } from './typings';
 
 function App() {
 
-  const [departure, setDeparture] = useState<any>({})
-  const [arrival, setArrival] = useState<any>({})
-  const [distance, setDistance] = useState<number>(0)
-  const [errorMsg, setErrorMsg] = useState<string>('')
+  const [departure, setDeparture] = useState<AirportI | any>()
+  const [arrival, setArrival] = useState<AirportI | any>()
+  const [distance, setDistance] = useState(0)
+  const [updatedResults, setUpdatedResults] = useState<ResultI | any>()
+  const [errorMsg, setErrorMsg] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = () => {
     fetch(`https://geo-services-by-mvpc-com.p.rapidapi.com/distance?locationB=${arrival?.latitude}%2C%20${arrival?.longitude}&locationA=${departure?.latitude}%2C%20${departure?.longitude}&unit=miles`, OPTIONS)
       .then(response => response.json())
       .then(response => {
-        const nauticalMilesConvertion = response.data * 0.868976
+        const nauticalMilesConvertion = response.data * 0.868976 // rate convertion between miles and nautical miles.
 
-        if (nauticalMilesConvertion) {
-          setDistance(Math.round(nauticalMilesConvertion))
-          setErrorMsg('')
-        } else {
-          setDistance(0)
-          setErrorMsg('Error whilte calculating distance. Please check your fields')
-        }
+        setLoading(true)
+        setErrorMsg('')
+
+        setTimeout(() => {
+          if (nauticalMilesConvertion) {
+            setDistance(Math.round(nauticalMilesConvertion))
+            setUpdatedResults({ departureAirport: departure.name, arrivalAirport: arrival.name })
+          } else {
+            setDistance(0)
+            setUpdatedResults({ departureAirport: '', arrivalAirport: '' })
+            setErrorMsg('Error while calculating distance. Please check your submitted fields.')
+          }
+          setLoading(false)
+        }, 2000);
       })
       .catch(err => console.error(err));
   }
 
   return (
     <div className='app'>
-      <h2 className='app--title'>🌎 Airport Distance Calculator 🛫</h2>
-
       <div className='app--container'>
+        <h2 className='app--container__title'>🌎 Airport Distance Calculator 🛫</h2>
         <Input
           label='Departure'
           placeholder='Ex: MIA'
@@ -50,14 +61,21 @@ function App() {
           type='submit'
           size='large'
           endIcon={<SendIcon />}
-          className='app--container_btn'
+          className='app--container__btn'
           onClick={handleSubmit}
         >
           Calculate distance
         </Button>
-        {distance !== 0 && <p className='app--container-distance'>The distance between <b>{departure.name}</b> and <b>{arrival.name}</b> is {distance} nautical miles.</p>}
 
-        {errorMsg && <p className='app--container-error'>{errorMsg}</p>}
+        {loading
+          ? <Box className='app--container__spinner'><CircularProgress /></Box>
+          : distance !== 0 ?
+            <p className='app--container__distance'>
+              The distance between <b>{updatedResults.departureAirport}</b> and <b>{updatedResults.arrivalAirport}</b> is <b><span className='app--container__miles'> {distance} nautical miles.</span></b>
+            </p>
+            : <Fragment />}
+
+        {errorMsg && <p className='app--container__error'>{errorMsg}</p>}
       </div>
     </div>
   );
