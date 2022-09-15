@@ -17,7 +17,7 @@ const Input = (props: InputI) => {
 
     const handleChange = (e: any) => {
         const foundAirport = airports && airports?.data?.filter((airport: AirportI) =>
-            airport?.iatacode === e.target.value.toUpperCase() ||
+            airport?.iatacode.includes( e.target.value.toUpperCase()) ||
             airport?.name.toLowerCase().includes(e.target.value) ||
             airport?.cityname?.toLowerCase().includes(e.target.value))
 
@@ -38,19 +38,20 @@ const Input = (props: InputI) => {
                 type="text"
                 label={label === 'Departure' ? 'Starting Airport' : 'Destination Airport'}
                 variant="filled"
+                aria-describedby={label}
                 name={label}
                 className='input--text'
                 placeholder={placeholder}
                 value={message}
                 error={errorMsg ? true : false}
-                helperText={errorMsg && "No results for this search 😞"}
+                helperText={errorMsg && "No results for this search."}
                 onChange={handleChange}
             />
             {search?.airportsArr && search?.airportsArr?.length >= 0 && message ?
                 <List className='input--dropdown'>
                     {search?.airportsArr?.map((airport: AirportI) =>
                         <div key={airport.iatacode}>
-                            <ListItem onClick={() => handleClick(search.param, airport)}>
+                            <ListItem className='input--option' onClick={() => handleClick(search.param, airport)}>
                                 {airport.name}, {airport.cityname}
                             </ListItem>
                             <Divider />
