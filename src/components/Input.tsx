@@ -55,8 +55,11 @@ const Input = (props: InputI) => {
                         <div
                             key={airport?.iatacode}
                             tabIndex={0}
+                            onKeyPress={() => handleClick(search.param, airport)}
                         >
-                            <ListItem className='input--option' onClick={() => handleClick(search.param, airport)}>
+                            <ListItem className='input--option'
+                                onClick={() => handleClick(search.param, airport)}
+                            >
                                 {airport?.name}, {airport?.cityname}
                             </ListItem>
                             <Divider />
