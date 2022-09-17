@@ -59,7 +59,8 @@ const Input = (props: InputI) => {
                             tabIndex={0}
                             onKeyPress={() => handleClick(search.param, airport)}
                         >
-                            <ListItem className='input--option'
+                            <ListItem
+                                className='input--option'
                                 onClick={() => handleClick(search.param, airport)}
                             >
                                 {airport?.name}, {airport?.cityname}
