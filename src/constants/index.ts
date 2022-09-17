@@ -9,3 +9,5 @@ export const OPTIONS = {
         'X-RapidAPI-Host': 'geo-services-by-mvpc-com.p.rapidapi.com'
     }
 };
+
+export const RATE_CONVERTION = 0.868976

@@ -4,7 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import PublicIcon from '@mui/icons-material/Public';
-import { OPTIONS } from './constants';
+import { OPTIONS, RATE_CONVERTION } from './constants';
 import { AirportI, ResultI } from './typings';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
     fetch(`https://geo-services-by-mvpc-com.p.rapidapi.com/distance?locationB=${arrival?.latitude}%2C%20${arrival?.longitude}&locationA=${departure?.latitude}%2C%20${departure?.longitude}&unit=miles`, OPTIONS)
       .then(response => response.json())
       .then(response => {
-        const nauticalMilesConvertion = response.data * 0.868976 // rate convertion between miles and nautical miles.
+        const nauticalMilesConvertion = response.data * RATE_CONVERTION // rate convertion between miles and nautical miles.
 
         setLoading(true)
         setErrorMsg('')
