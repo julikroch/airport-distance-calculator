@@ -8,7 +8,6 @@ import { OPTIONS } from './constants';
 import { AirportI, ResultI } from './typings';
 
 function App() {
-
   const [departure, setDeparture] = useState<AirportI>()
   const [arrival, setArrival] = useState<AirportI>()
   const [distance, setDistance] = useState(0)
@@ -32,7 +31,7 @@ function App() {
           } else {
             setDistance(0)
             setUpdatedResults({ departureAirport: '', arrivalAirport: '' })
-            setErrorMsg('Error while calculating distance. Please check submitted fields.')
+            setErrorMsg('Error while calculating nautical miles. Please check the submitted fields.')
           }
           setLoading(false)
         }, 2000);
@@ -77,7 +76,7 @@ function App() {
             <p className='app--container__distance'>
               The distance between
               <b> {updatedResults.departureAirport}</b> and
-              <b> {updatedResults.arrivalAirport}</b> is
+              <b> {updatedResults.arrivalAirport}</b> is:
               <b><span className='app--container__miles'> 🧭 {distance} nautical miles 🧭</span></b>
             </p>
             : <Fragment />}
