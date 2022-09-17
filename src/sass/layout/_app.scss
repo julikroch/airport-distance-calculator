@@ -1,11 +1,7 @@
 .app {
     display: grid;
     place-content: center;
-    height: 75vh;
-
-    @include respond(tablet) {
-        height: 100vh;
-    }
+    height: 100vh;
 
     &--container {
         margin: 0 1rem;
@@ -13,15 +9,20 @@
         box-shadow: 0px 0px 10px #595959;
         padding: 2rem;
         border-radius: .4rem;
+        background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.822074) 0%, rgba(0, 83, 207, 0.822074) 100%);
 
         @include respond(tablet) {
             width: 35rem;
         }
 
         &__title {
-            font-size: 1.2rem;
+            font-size: 1.125rem;
             text-align: center;
             margin-bottom: 2.5rem;
+
+            @include respond(tablet) {
+                font-size: 2rem;
+            }
         }
 
         &__btn {
@@ -33,6 +34,10 @@
             margin-top: 1.5rem;
             line-height: 1.5;
             text-align: center;
+
+            @include respond(tablet) {
+                font-size: 1.125rem;
+            }
         }
 
         &__error {
@@ -40,10 +45,13 @@
         }
 
         &__miles {
-            color: $defaultBlue;
             display: block;
             margin-top: 1rem;
             font-size: 1.25rem;
+
+            @include respond(tablet) {
+                font-size: 1.3rem;
+            }
         }
 
         &__spinner {

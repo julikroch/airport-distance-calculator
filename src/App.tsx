@@ -3,7 +3,7 @@ import Input from './components/Input';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
+import PublicIcon from '@mui/icons-material/Public';
 import { OPTIONS } from './constants';
 import { AirportI, ResultI } from './typings';
 
@@ -43,7 +43,7 @@ function App() {
   return (
     <div className='app'>
       <div className='app--container'>
-        <h2 className='app--container__title'>🌎 Airport distance calculator 🛫</h2>
+        <h2 className='app--container__title'>🌎 Airport Distance Calculator 🛫</h2>
         <Input
           label='Departure'
           placeholder='Ex: MIA'
@@ -59,10 +59,11 @@ function App() {
         />
 
         <Button
-          variant="outlined"
+          variant="contained"
+          color="success"
           type='submit'
           size='large'
-          endIcon={<SendIcon />}
+          endIcon={<PublicIcon />}
           className='app--container__btn'
           onClick={handleSubmit}
         >

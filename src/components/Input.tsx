@@ -23,14 +23,16 @@ const Input = (props: InputI) => {
 
         setErrorMsg(!foundAirport?.length ? true : false)
         setMessage(e.target.value)
-        setSearch({ param: e.target.name, airportsArr: foundAirport ?? [] })
-        search?.param === 'Departure' ? setDeparture(foundAirport) : setArrival(foundAirport)
+        setSearch({ ...search, param: e.target.name, airportsArr: foundAirport ?? [] })
+        search?.param === 'Departure' && setDeparture(foundAirport)
+        search?.param === 'Arrival' && setArrival(foundAirport)
     }
 
     const handleClick = (param: string, airport: AirportI) => {
         setMessage(airport.iatacode)
-        param === 'Departure' ? setDeparture(airport) : setArrival(airport)
-        setSearch({ param: '', airportsArr: [] })
+        param === 'Departure' && setDeparture(airport)
+        param === 'Arrival' && setArrival(airport)
+        setSearch({ ...search, param: '', airportsArr: [] })
     }
 
     return (
