@@ -1,9 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { useAirports } from '../hooks/useAirports'
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import TextField from '@mui/material/TextField';
+import { List, ListItem, Divider, TextField } from '@mui/material';
 import { InputI, SearchI, AirportI } from '../typings';
 
 const Input = (props: InputI) => {

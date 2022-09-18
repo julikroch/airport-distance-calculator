@@ -1,8 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import Input from './components/Input';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { CircularProgress, Box, Button } from '@mui/material';
 import PublicIcon from '@mui/icons-material/Public';
 import { OPTIONS, RATE_CONVERTION } from './constants';
 import { AirportI, ResultI } from './typings';
