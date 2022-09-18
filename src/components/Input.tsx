@@ -68,8 +68,8 @@ const Input = (props: InputI) => {
                             <Divider />
                         </div>
                     )}
-                </List> : <Fragment />
-            }
+                </List>
+                : <Fragment />}
         </div>
     )
 }

@@ -15,34 +15,35 @@ function App() {
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = () => {
-    fetch(`https://geo-services-by-mvpc-com.p.rapidapi.com/distance?locationB=${arrival?.latitude}%2C%20${arrival?.longitude}&locationA=${departure?.latitude}%2C%20${departure?.longitude}&unit=miles`, OPTIONS)
-      .then(response => response.json())
-      .then(response => {
-        const nauticalMilesConvertion = response.data * RATE_CONVERTION // rate convertion between miles and nautical miles.
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(`https://geo-services-by-mvpc-com.p.rapidapi.com/distance?locationB=${arrival?.latitude}%2C%20${arrival?.longitude}&locationA=${departure?.latitude}%2C%20${departure?.longitude}&unit=miles`, OPTIONS)
+      const distanceData = await response.json()
+      const nauticalMilesConvertion = distanceData?.data * RATE_CONVERTION // rate convertion between miles and nautical miles.
 
-        setLoading(true)
-        setErrorMsg('')
+      setLoading(true)
+      setErrorMsg('')
 
-        setTimeout(() => {
-          if (nauticalMilesConvertion) {
-            setDistance(Math.round(nauticalMilesConvertion))
-            departure && arrival && setUpdatedResults({ departureAirport: departure.name, arrivalAirport: arrival.name })
-          } else {
-            setDistance(0)
-            setUpdatedResults({ departureAirport: '', arrivalAirport: '' })
-            setErrorMsg('Error while calculating nautical miles. Please check the submitted fields.')
-          }
-          setLoading(false)
-        }, 2000);
-      })
-      .catch(err => console.error(err));
+      setTimeout(() => {
+        if (nauticalMilesConvertion) {
+          setDistance(Math.round(nauticalMilesConvertion))
+          departure && arrival && setUpdatedResults({ departureAirport: departure.name, arrivalAirport: arrival.name })
+        } else {
+          setDistance(0)
+          setUpdatedResults({ departureAirport: '', arrivalAirport: '' })
+          setErrorMsg('Error while calculating nautical miles. Please check the submitted fields.')
+        }
+        setLoading(false)
+      }, 2000);
+    } catch (error) {
+      console.error('Error while calculating the distance between airports', error)
+    }
   }
 
   return (
     <div className='app'>
       <div className='app--container'>
-        <h2 className='app--container__title'>🌎 Airport Distance Calculator 🛫</h2>
+        <h1 className='app--container__title'>🌎 Airport Distance Calculator 🛫</h1>
         <Input
           label='Departure'
           placeholder='Ex: MIA'
