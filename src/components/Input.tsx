@@ -48,7 +48,7 @@ const Input = (props: InputI) => {
                 onChange={handleChange}
             />
 
-            {search?.airportsArr && search?.airportsArr?.length >= 0 && message ?
+            {search?.airportsArr && search?.airportsArr?.length && message ?
                 <List className='input--dropdown'>
                     {search?.airportsArr?.map((airport: AirportI) =>
                         <div

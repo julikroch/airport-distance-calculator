@@ -14,28 +14,27 @@ function App() {
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async () => {
+    setLoading(true)
+    setErrorMsg('')
+
     try {
       const response = await fetch(`https://geo-services-by-mvpc-com.p.rapidapi.com/distance?locationB=${arrival?.latitude}%2C%20${arrival?.longitude}&locationA=${departure?.latitude}%2C%20${departure?.longitude}&unit=miles`, OPTIONS)
       const distanceData = await response.json()
       const nauticalMilesConvertion = distanceData?.data * RATE_CONVERTION // rate convertion between miles and nautical miles.
 
-      setLoading(true)
-      setErrorMsg('')
+      if (nauticalMilesConvertion) {
+        setDistance(Math.round(nauticalMilesConvertion))
+        departure && arrival && setUpdatedResults({ departureAirport: departure.name, arrivalAirport: arrival.name })
+      } else {
+        setDistance(0)
+        setUpdatedResults({ departureAirport: '', arrivalAirport: '' })
+        setErrorMsg('Error while calculating nautical miles. Please check the submitted fields.')
+      }
 
-      setTimeout(() => {
-        if (nauticalMilesConvertion) {
-          setDistance(Math.round(nauticalMilesConvertion))
-          departure && arrival && setUpdatedResults({ departureAirport: departure.name, arrivalAirport: arrival.name })
-        } else {
-          setDistance(0)
-          setUpdatedResults({ departureAirport: '', arrivalAirport: '' })
-          setErrorMsg('Error while calculating nautical miles. Please check the submitted fields.')
-        }
-        setLoading(false)
-      }, 2000);
     } catch (error) {
       console.error('Error while calculating the distance between airports', error)
     }
+    setLoading(false)
   }
 
   return (
@@ -76,10 +75,9 @@ function App() {
               The distance between
               <b> {updatedResults.departureAirport}</b> and
               <b> {updatedResults.arrivalAirport}</b> is:
-              <b><span className='app--container__miles'> 🧭 {distance} nautical miles 🧭</span></b>
+              <span className='app--container__miles'> <b>🧭 {distance} nautical miles 🧭</b></span>
             </p>
             : <Fragment />}
-
         {errorMsg && <p data-testid='error-msg' className='app--container__error'>{errorMsg}</p>}
       </div>
     </div>
