@@ -3,7 +3,7 @@ import Input from './components/Input';
 import { CircularProgress, Box, Button } from '@mui/material';
 import PublicIcon from '@mui/icons-material/Public';
 import { OPTIONS, RATE_CONVERTION } from './constants';
-import { AirportI, ResultI } from './typings';
+import type { AirportI, ResultI } from './typings';
 
 function App() {
   const [departure, setDeparture] = useState<AirportI>()
